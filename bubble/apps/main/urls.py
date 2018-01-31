@@ -18,6 +18,7 @@ urlpatterns = [
     #remove during production
     url(r'^dev$', views.dev),
     url(r'^dev/text$', views.text),
-    url(r'^dev/payment$', views.payment),
+    url(r'^payment$', views.payment),
+    url(r'^checkout$', views.checkout),
 
 ]
