@@ -24,7 +24,8 @@
     <div class="container">
       <h2>Bubble Order Form </h2>
       <hr />
-      <form action="/add_order" method="POST">
+      <form action="add_order" method="POST">
+        {% csrf_token %}
         <div id="order-items">
           <p id="clothes-description">Shirts</p>
           <input type="number" class="clothes-input" id="shirts" autofocus/> $4.00
@@ -41,7 +42,7 @@
           <p id="clothes-description">Coats</p>
           <input type="number" class="clothes-input" id="coats" autofocus/> $30.00
           <br />
-        
+
           <p>Special Requests:</p>
           <textarea class="form-control" id="requests"></textarea>
           <br />
@@ -61,7 +62,7 @@
           <br />
         </div>
         <input class="btn btn-primary" type="submit" value="Submit Order" onclick="done()">
-        <button class="btn btn-info" onclick="reset()">Reset Order</button>
+        <button class="btn btn-info" onclick="reset()" type="button">Reset Order</button>
         <a class="btn btn-primary btn btn-danger" href="/dashboard" role="button">Cancel</a>
         </div>
       </form>

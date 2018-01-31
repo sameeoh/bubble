@@ -14,7 +14,7 @@ urlpatterns = [
     #add order html render
     url(r'^order$', views.order),
     #add_order process
-    url(r'^order/(?P<id>\d+)$', views.add_order),
+    url(r'^add_order$', views.add_order),
     #remove during production
     url(r'^dev$', views.dev),
     url(r'^dev/text$', views.text),
