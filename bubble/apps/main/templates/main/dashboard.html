@@ -12,6 +12,7 @@
       <link rel="stylesheet" href="{% static 'main/bower_components/font-awesome/css/font-awesome.min.css' %}" media="screen" title="no title"  charset="utf-8">
       <!-- JAVASCRIPT -->
       <script type="text/javascript" src="{% static 'main/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+      <script type="text/javascript" src='http://code.jquery.com/jquery-1.10.2.min.js'></script>
       <link rel="stylesheet" href="{% static 'main/css/main.css' %}" media="screen" title="no title"  charset="utf-8">
   </head>
   <body>
@@ -22,12 +23,27 @@
     <div id="dash-list">
       <div class="list-group">
         <a href="/order" class="list-group-item">Add New Order</a>
-        <a href="#" class="list-group-item">Update Information</a>
+        <a href="#" class="list-group-item" onclick="updateInformation()">Update Information</a>
         <a href="/logout" class="list-group-item">Logout</a>
       </div>
     </div>
     <div id="orders">
       <h4>Your Previous Orders:</h4>
     </div>
+    <div id="update-form">
+      <form action="" method="POST">
+        {% csrf_token %}
+        Name: <input type="text" name="name" class="form-control" value="{{info.name}}" autofocus="true"/><br />
+        Email: <input type="email" name="email" class="form-control" value="{{info.email}}"/><br />
+        Phone Number: <input type="text" name="phone_number" class="form-control" value="{{info.phone_number}}"/><br />
+        <button type="submit" class="btn btn-info">Update Information</button>
+      </form>
+    </div>
   </body>
 </html>
+<script>
+function updateInformation() {
+
+$('#update-form').fadeToggle();
+}
+</script>

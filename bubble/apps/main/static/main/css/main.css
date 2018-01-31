@@ -58,3 +58,9 @@ input[type=number]{
 #summary{
   margin-left: 100px;
 }
+#update-form {
+  margin-left: 50px;
+  margin-top: 20px;
+  display: none;
+  width: 350px;
+}

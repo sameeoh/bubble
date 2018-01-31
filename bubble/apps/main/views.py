@@ -24,6 +24,12 @@ def login(request):
             request.session['user_id'] = user.id
             # get name of user
             name = User.objects.get(id = user.id)
+            #get level of user
+            admin_check = name.level
+            #admin redirect
+            if admin_check == 1:
+                #test for redirectreturn redirect ('/order')
+                return redirect('/dashboard')
             request.session['name'] = name.name
             return redirect('/dashboard')
         else:
@@ -75,7 +81,18 @@ def logout(request):
 def dashboard(request):
     if not 'user_id' in request.session:
         return redirect('/')
-    return render(request, 'main/dashboard.html')
+    if request.method == "GET":
+        get_info_update = User.objects.get(id=request.session['user_id'])
+        context = {"info": get_info_update}
+        return render(request, 'main/dashboard.html', context)
+    if request.method == "POST":
+        update_user = User.objects.get(id=request.session['user_id'])
+        update_user.name = request.POST['name']
+        update_user.email = request.POST['email']
+        update_user.phone_number = request.POST['phone_number']
+        update_user.save()
+        return redirect('/dashboard')
+    return render(request, 'main/dashboard.html', context)
 
 ############# ORDER ITEMS ##################
 def order(request):
@@ -84,7 +101,7 @@ def order(request):
 
     return render(request, 'main/order.html')
 def add_order(request):
-    
+
     return redirect('/dashboard')
 
 ###############################
@@ -108,3 +125,6 @@ def text(request):
 
     print(message.sid)
     return redirect('/dev')
+
+def payment(request):
+    return render(request, 'main/payment.html')
