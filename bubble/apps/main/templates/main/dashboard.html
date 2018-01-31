@@ -43,16 +43,16 @@
         <tbody>
           {% for o in my_orders %}
           <tr>
-            <td>{{o.created_at}}</td>
+            <td>{{o.created_at|date:"M d, Y"}}</td>
             <td>{{o.method|title}}</td>
             <td>{{o.method_date}}</td>
             <td>{{o.special}}</td>
             <td>
               {% for p in o.list_items.all %}
-              {{p.product.product|title}} - {{p.quantity}}
+              {{p.product.product|title}} - {{p.quantity}} |
               {% endfor %}
             </td>
-            <td>{{o.total}}</td>
+            <td>${{o.total}}</td>
             <td>{{o.status}}</td>
           </tr>
         {% endfor %}
