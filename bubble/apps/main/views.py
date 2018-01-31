@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect
+
 from django.contrib import messages
 
 import bcrypt
+
 from models import *
+
+from datetime import datetime
 
 ## BUBLE MAIN  VIEWS ##
 def index(request):
@@ -72,10 +76,24 @@ def logout(request):
     request.session.clear()
     return redirect ('/')
 
+############# HOME PAGE ##################
 def dashboard(request):
     if not 'user_id' in request.session:
         return redirect('/')
-    return render(request, 'main/dashboard.html')
+
+    user = User.objects.get(id=request.session['user_id'])
+    
+    my_orders = Order.objects.filter(
+        customer=user).prefetch_related("list_items", "list_items__product")
+
+    my_orders_items = Product.objects.filter(order=my_orders)
+
+    context = {
+        'user' : user,
+        'my_orders' : my_orders,
+        'my_orders_items' : my_orders_items,
+    }
+    return render(request, 'main/dashboard.html', context)
 
 ############# ORDER ITEMS ##################
 def order(request):
@@ -84,7 +102,32 @@ def order(request):
 
     return render(request, 'main/order.html')
 def add_order(request):
-    
+    print request.POST
+    shirt_quant = request.POST['shirt_quant']
+    jacket_quant = request.POST['jacket_quant']
+    pants_quant = request.POST['pants_quant']
+    suit_quant = request.POST['suit_quant']
+    coat_quant = request.POST['coat_quant']
+    special = request.POST['special']
+    method = request.POST['method']
+    method_date = datetime.strptime(request.POST['method_date'], '%Y-%m-%d').date()
+    total = float(request.POST['total'])
+    user = User.objects.get(id=request.session['user_id'])
+    order = Order.objects.create(special=special, method=method, method_date=method_date, customer=user, total = total)
+    if shirt_quant > 0:
+        ListItems.objects.create(order=order, product=Product.objects.get(id=1), quantity=shirt_quant)
+    if jacket_quant > 0:
+        ListItems.objects.create(
+        order=order, product=Product.objects.get(id=2), quantity=jacket_quant)
+    if pants_quant > 0:
+        ListItems.objects.create(
+        order=order, product=Product.objects.get(id=3), quantity=pants_quant)
+    if suit_quant > 0:
+        ListItems.objects.create(
+        order=order, product=Product.objects.get(id=4), quantity=suit_quant)
+    if coat_quant > 0:
+        ListItems.objects.create(
+        order=order, product=Product.objects.get(id=5), quantity=coat_quant)
     return redirect('/dashboard')
 
 ###############################

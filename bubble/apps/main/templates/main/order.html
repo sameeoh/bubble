@@ -28,23 +28,23 @@
         {% csrf_token %}
         <div id="order-items">
           <p id="clothes-description">Shirts</p>
-          <input type="number" class="clothes-input" id="shirts" autofocus/> $4.00
+          <input type="number" class="clothes-input" id="shirts" name="shirt_quant" autofocus/> $4.00
           <br />
           <p id="clothes-description">Jackets</p>
-          <input type="number" class="clothes-input" id="jackets" autofocus/> $10.00
+          <input type="number" class="clothes-input" id="jackets" name="jacket_quant" autofocus/> $10.00
           <br />
           <p id="clothes-description">Pants</p>
-          <input type="number" class="clothes-input" id="pants" autofocus/> $20.00
+          <input type="number" class="clothes-input" id="pants" name="pants_quant" autofocus/> $20.00
           <br />
           <p id="clothes-description">Suits</p>
-          <input type="number" class="clothes-input" id="suits" autofocus/> $25.00
+          <input type="number" class="clothes-input" id="suits" name="suit_quant"autofocus/> $25.00
           <br />
           <p id="clothes-description">Coats</p>
-          <input type="number" class="clothes-input" id="coats" autofocus/> $30.00
+          <input type="number" class="clothes-input" id="coats" name="coat_quant" autofocus/> $30.00
           <br />
 
           <p>Special Requests:</p>
-          <textarea class="form-control" id="requests"></textarea>
+          <textarea class="form-control" id="requests" name="special"></textarea>
           <br />
           <br />
         </div>
@@ -56,8 +56,8 @@
           <input type="radio" name="method" value="dropoff" id="dropoff" />
         </div>
         <div id="total-content">
-          Order Total:
-          <input type="text" disabled="true" id="total" />
+          Order Total: $
+          <input type="number" id="total" name="total" />
           <br />
           <br />
         </div>
@@ -72,7 +72,7 @@
 
 $(document).ready(function(){
 
-  $('#total').val("$"+0);
+  $('#total').val(0);
 
   $('input').on("input", function(){
 
@@ -96,7 +96,7 @@ $(document).ready(function(){
     total += suits_quantity * suits;
     total += coat_quantity * coats;
 
-    $('#total').val("$"+ total)
+    $('#total').val(total)
 
   });
 
@@ -113,7 +113,7 @@ function done(){
 function reset(){
 
 $('#shirts, #jackets, #pants, #suits, #coats, #requests').val(" ");
-$('#total').val("$"+0)
+$('#total').val(0)
 $("input[type=date]").val("")
 $('#pickup, #dropoff').prop('checked', false);
 

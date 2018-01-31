@@ -28,6 +28,36 @@
     </div>
     <div id="orders">
       <h4>Your Previous Orders:</h4>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Order Date</th>
+            <th>Pick Up/ Drop Off</th>
+            <th>Pick Up/ Drop Off Date</th>
+            <th>Special Requests</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for o in my_orders %}
+          <tr>
+            <td>{{o.created_at|date:"M d, Y"}}</td>
+            <td>{{o.method|title}}</td>
+            <td>{{o.method_date}}</td>
+            <td>{{o.special}}</td>
+            <td>
+              {% for p in o.list_items.all %}
+              {{p.product.product|title}} - {{p.quantity}} |
+              {% endfor %}
+            </td>
+            <td>${{o.total}}</td>
+            <td>{{o.status}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

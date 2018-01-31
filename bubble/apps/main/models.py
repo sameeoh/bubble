@@ -27,11 +27,12 @@ class User(models.Model):
 
 
 class Order(models.Model):
-    special = models.TextField()
+    special = models.TextField(default="None")
     method = models.CharField(max_length=10)
     method_date = models.DateField(default=datetime.date.today)
     customer = models.ForeignKey(User, related_name="orders")
     status = models.CharField(max_length=25, default="New")
+    total = models.FloatField(default=0.0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -40,15 +41,14 @@ class Product(models.Model):
     product = models.CharField(max_length=100)
     desc = models.CharField(max_length=255)
     price = models.FloatField()
-    order = models.ManyToManyField(
-        Order, through='ListItems', related_name="products")
+    order = models.ManyToManyField(Order, through='ListItems', related_name="products")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 
 class ListItems(models.Model):
-    order = models.ForeignKey(Order)
-    product = models.ForeignKey(Product)
+    order = models.ForeignKey(Order, related_name="list_items")
+    product = models.ForeignKey(Product, related_name="list_items")
     quantity = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
