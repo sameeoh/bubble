@@ -88,9 +88,24 @@ def dashboard(request):
         return redirect('/')
       
     if request.method == "GET":
+        user = User.objects.get(id=request.session['user_id'])
+
+        my_orders = Order.objects.filter(
+            customer=user).order_by('-created_at').prefetch_related("list_items", "list_items__product")
+
+        my_orders_items = Product.objects.filter(order=my_orders)
+
         get_info_update = User.objects.get(id=request.session['user_id'])
-        context = {"info": get_info_update}
+
+        context = {
+            'user': user,
+            'my_orders': my_orders,
+            'my_orders_items': my_orders_items,
+            'info': get_info_update,
+        }
+
         return render(request, 'main/dashboard.html', context)
+
     if request.method == "POST":
         update_user = User.objects.get(id=request.session['user_id'])
         update_user.name = request.POST['name']
@@ -99,20 +114,6 @@ def dashboard(request):
         update_user.save()
         return redirect('/dashboard')
 
-    user = User.objects.get(id=request.session['user_id'])
-    
-    my_orders = Order.objects.filter(
-        customer=user).prefetch_related("list_items", "list_items__product")
-
-    my_orders_items = Product.objects.filter(order=my_orders)
-
-    context = {
-        'user' : user,
-        'my_orders' : my_orders,
-        'my_orders_items' : my_orders_items,
-    }
-
-    return render(request, 'main/dashboard.html', context)
 
 ############# ORDER ITEMS ##################
 def order(request):
