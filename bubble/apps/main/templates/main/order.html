@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bubble || Orders</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% load static %}
+      <!-- Bootstrap -->
+      <link rel="stylesheet" href="{% static 'main/bower_components/bootstrap/dist/css/bootstrap.min.css' %}" media="screen" title="no title"  charset="utf-8">
+      <!-- Font Awesome -->
+      <link rel="stylesheet" href="{% static 'main/bower_components/font-awesome/css/font-awesome.min.css' %}" media="screen" title="no title"  charset="utf-8">
+      <!-- JAVASCRIPT -->
+      <script type="text/javascript" src="{% static 'main/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+      <link rel="stylesheet" href="{% static 'main/css/main.css' %}" media="screen" title="no title"  charset="utf-8">
+      <script src="{% static 'main/js/main.js' %}"></script>
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+      <script type="text/javascript" src='http://code.jquery.com/jquery-1.10.2.min.js'></script>
+  </head>
+
+  </head>
+  <body>
+    <div class="container">
+      <h2>Bubble Order Form </h2>
+      <hr />
+      <form action="/add_order" method="POST">
+        <div id="order-items">
+          <p id="clothes-description">Shirts</p>
+          <input type="number" class="clothes-input" id="shirts" autofocus/> $4.00
+          <br />
+          <p id="clothes-description">Jackets</p>
+          <input type="number" class="clothes-input" id="jackets" autofocus/> $10.00
+          <br />
+          <p id="clothes-description">Pants</p>
+          <input type="number" class="clothes-input" id="pants" autofocus/> $20.00
+          <br />
+          <p id="clothes-description">Suits</p>
+          <input type="number" class="clothes-input" id="suits" autofocus/> $25.00
+          <br />
+          <p id="clothes-description">Coats</p>
+          <input type="number" class="clothes-input" id="coats" autofocus/> $30.00
+          <br />
+        
+          <p>Special Requests:</p>
+          <textarea class="form-control" id="requests"></textarea>
+          <br />
+          <br />
+        </div>
+        <div id="dates">
+          Drop Off/ Pick Up Date:
+          <input type="date" class="form-control" name="method_date" />
+          <br /> Pickup
+          <input type="radio" name="method" value="pickup" id="pickup" /> Dropoff
+          <input type="radio" name="method" value="dropoff" id="dropoff" />
+        </div>
+        <div id="total-content">
+          Order Total:
+          <input type="text" disabled="true" id="total" />
+          <br />
+          <br />
+        </div>
+        <input class="btn btn-primary" type="submit" value="Submit Order" onclick="done()">
+        <button class="btn btn-info" onclick="reset()">Reset Order</button>
+        <a class="btn btn-primary btn btn-danger" href="/dashboard" role="button">Cancel</a>
+        </div>
+      </form>
+  </body>
+</html>
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+  $('#total').val("$"+0);
+
+  $('input').on("input", function(){
+
+    var shirt = 4;
+    var jackets = 10;
+    var pants = 20;
+    var suits = 25;
+    var coats = 30;
+
+    var shirt_quantity = $('#shirts').val();
+    var jackets_quantity = $('#jackets').val();
+    var pants_quantity = $('#pants').val();
+    var suits_quantity = $('#suits').val();
+    var coat_quantity = $('#coats').val();
+
+    var total = 0;
+
+    total += shirt_quantity * shirt;
+    total += jackets_quantity * jackets;
+    total += pants_quantity * pants;
+    total += suits_quantity * suits;
+    total += coat_quantity * coats;
+
+    $('#total').val("$"+ total)
+
+  });
+
+
+})
+function done(){
+
+  swal({
+  icon: "success",
+  text: "Order Successfully Submitted",
+});
+}
+
+function reset(){
+
+$('#shirts, #jackets, #pants, #suits, #coats, #requests').val(" ");
+$('#total').val("$"+0)
+$("input[type=date]").val("")
+$('#pickup, #dropoff').prop('checked', false);
+
+}
+</script>

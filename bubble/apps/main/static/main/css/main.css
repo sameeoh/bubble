@@ -1,0 +1,60 @@
+
+#register{
+  display: inline-block;
+  width: 400px;
+}
+#login{
+  display: inline-block;
+  width: 400px;
+  vertical-align: top;
+  margin-left: 80px;
+}
+#login-form{
+  margin-top: 28px;
+}
+#clothes-description{
+    display:inline-block;
+    margin-right: 9px;
+}
+.clothes-input{
+  display:inline-block;
+}
+input[type=number]{
+  width: 80px;
+}
+
+#total {
+  text-align:center;
+}
+
+#dash-list, #orders{
+  width: 400px;
+  display: inline-block;
+}
+#orders{
+  margin-left: 300px;
+}
+#items {
+  display: inline-block;
+  width: 400px;
+  background-color: red;
+}
+#summary{
+  display: inline-block;
+  vertical-align: top;
+  width: 300px;
+}
+#requests {
+
+  width: 300px;
+}
+#dates, #order-items {
+  display: inline-block;
+  width: 500px;
+}
+#order-items{
+  vertical-align: top;
+}
+#summary{
+  margin-left: 100px;
+}
