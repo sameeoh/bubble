@@ -202,3 +202,6 @@ def checkout(request):
     else:
         return redirect('/dashboard')
         #new_car.save()
+
+def admin(request):
+    return render(request, 'main/index.html')
