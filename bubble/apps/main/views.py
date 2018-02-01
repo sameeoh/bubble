@@ -205,4 +205,13 @@ def checkout(request):
         #new_car.save()
 
 def admin(request):
-    return render(request, 'main/index.html')
+    # orders=Orders.objects.all()
+    # context={
+    #     'orders': orders,
+    # }
+    return render(request, 'main/admin.html')
+
+def orderinfo(request):
+# def orderinfo(request, id):
+    # user = User.objects.get(id=id)
+    return render(request, 'main/orderinfo.html')
