@@ -90,15 +90,19 @@
     <h3>Monthly Analytics</h3>
             <div class="sales">
                 <p>Total Sales:</p>
+                <p>${{sales.total__sum}}</p>
             </div>
             <div class="sales">
                 <p>Total Number of Orders:</p>
+                <p>{{torders.id__count}}</p>
             </div>
             <div class="sales">
                 <p>Total Online Visits</p>
+                <p>100</p>
             </div>
             <div class="sales">
                 <p>Total Online Visits</p>
+                <p>100</p>
             </div>
 
     <h3>Recent Sales</h3>
@@ -107,7 +111,7 @@
         <tr>
             <th>Special Message</th>
             <th>Order ID</th>
-            <th><a href="/orderinfo"></a> Name</th>
+            <th>Name</th>
             <th>Pickup Date</th>
             <th>Total</th>
             <th>Action</th>
@@ -117,18 +121,20 @@
         {% for o in orders %}
             <tr>
                 <td>
-                    {% if o.special != "None "%}
+                    {% if o.special != "" %}
                     Yes
                     {% else %}
                     No
                     {% endif %}
                 </td>
-                <td>{{o.id}}</td>
+                <td>
+                    <a href="/admin/orderinfo/{{o.id}}">{{o.id}}</a>
+                </td>
                 <td>
                     {{o.customer.name }} 
                 </td>
                 <td>{{o.method_date}}</td>
-                <td>{{o.total}}</td>
+                <td>${{o.total}}</td>
                 <td>
                     <a href="#">Complete</a>
                 </td>
