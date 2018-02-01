@@ -49,6 +49,6 @@ class Product(models.Model):
 class ListItems(models.Model):
     order = models.ForeignKey(Order, related_name="list_items")
     product = models.ForeignKey(Product, related_name="list_items")
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

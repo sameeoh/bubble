@@ -87,7 +87,7 @@ def logout(request):
 def dashboard(request):
     if not 'user_id' in request.session:
         return redirect('/')
-      
+
     if request.method == "GET":
         user = User.objects.get(id=request.session['user_id'])
 
@@ -187,15 +187,16 @@ def checkout(request):
 
     if request.method == "POST":
         token    = request.POST.get("stripeToken")
+        print "@@@@@@@@@@@@@@@@@"
     #
     # try:
         charge  = stripe.Charge.create(
-            amount      = 2000,
+            amount      = 3000,
             currency    = "usd",
     #         source      = token,
     #         description = "The product charged to the user"
         )
-        return redirect('/payment')
+        return redirect('/dashboard')
         # new_car.charge_id   = charge.id
     #except stripe.error.CardError as ce:
     #    return False, ce
