@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bubble_j/css/main.css' %}" media="screen" title="no title"  charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Admin</title>
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
+
+        .wrapper{
+            background-color: #EDF0F5;
+            height: 1000px;
+
+        }
+        
+        .sidenav {
+            height: 100%;
+            width: 200px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: rgb(110, 184, 240);
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+        
+        .sidenav a {
+            padding: 6px 6px 6px 32px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #fffefe;
+            display: block;
+        }
+        
+        .sidenav a:hover {
+            color: #111111;
+        }
+        
+        .main {
+            margin-left: 250px; /* Same as the width of the sidenav */
+        }
+
+        .sales {
+            margin-right: 20px; 
+            border: onset rgb(180, 178, 178);
+            border-width: 1px;
+            border-radius: 10px;
+            width: 300px;
+            height: 100px;
+            display: inline-block;
+            padding: 7px;
+            font-size: 15px;
+            background-color: white;
+        }
+
+        h2{
+            margin-top: 0px;
+        }
+
+        .table{
+            background-color: white;
+        }
+  
+        @media screen and (max-height: 450px) {
+            .sidenav {padding-top: 15px;}
+            .sidenav a {font-size: 15px;}
+        }
+        </style>
+</head>
+    
+<body>
+<div class="wrapper">
+<div class="sidenav">
+  <a href="#">Home</a>
+  <a href="#">Orders</a>
+  <a href="#">Ind. Order</a>
+  <a href="/logout">Logout</a>
+</div>
+
+<div class="main">
+    <h2>Hello Admin!</h2>
+    <h3>Monthly Analytics</h3>
+            <div class="sales">
+                <p>Total Sales:</p>
+            </div>
+            <div class="sales">
+                <p>Total Number of Orders:</p>
+            </div>
+            <div class="sales">
+                <p>Total Online Visits</p>
+            </div>
+            <div class="sales">
+                <p>Total Online Visits</p>
+            </div>
+
+    <h3>Recent Sales</h3>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Special Message</th>
+            <th>Order ID</th>
+            <th><a href="/orderinfo"></a> Name</th>
+            <th>Pickup Date</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Yes</td>
+            <td>1</td>
+            <td>Kobe Bryant</td>
+            <td>02/04/2018</td>
+            <td>$ 203.00</td>
+            <td><a href="#">Complete</a></td>
+            <td><a href="#">Delete</a></td>
+            
+        </tr>
+        <tr>
+            <td>Yes</td>
+            <td>2</td>
+            <td>Mary Jane</td>
+            <td>02/07/2018</td>
+            <td>$ 215.00</td>
+            <td><a href="#">Complete</a></td>
+            <td><a href="#">Delete</a></td>
+        </tr>
+        <tr>
+            <td>No</td>
+            <td>3</td>
+            <td>John Choi</td>
+            <td>02/08/2018</td>
+            <td>$ 300.00</td>
+            <td><a href="#">Complete</a></td>
+            <td><a href="#">Delete</a></td>
+        </tr>
+        </tbody>
+        </table>
+</div>
+</div>
+     
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>
