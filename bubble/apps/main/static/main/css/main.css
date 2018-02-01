@@ -56,8 +56,26 @@ input[type=number]{
   margin-left: 100px;
 }
 #update-form {
-  margin-left: 50px;
+  margin-left: 25px;
   margin-top: 20px;
-  display: none;
-  width: 350px;
+  display: inline-block;
+  width: 300px;
+}
+#dash-left{
+  display: inline-block;
+  width: 325px;
+}
+#dash-list{
+  width: 300px;
+}
+#orders{
+  margin-left: 150px;
+  width: 850px;
+  vertical-align: top;
+  max-height: 900px;
+  overflow: scroll;
+  padding: 10px;
+}
+#user-login-info{
+margin-left: 10px;
 }
