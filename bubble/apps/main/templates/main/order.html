@@ -53,7 +53,11 @@
           <input type="date" class="form-control" name="method_date" />
           <br /> Pickup
           <input type="radio" name="method" value="pickup" id="pickup" /> Dropoff
-          <input type="radio" name="method" value="dropoff" id="dropoff" />
+          <input type="radio" name="method" value="dropoff" id="dropoff" /><br />
+          <div id="dates-buttons">
+            <button class="btn btn-info" onclick="reset()" type="button">Reset Order</button>
+            <a class="btn btn-primary btn btn-danger" href="/dashboard" role="button">Cancel</a>
+          </div>
         </div>
         <div id="total-content">
           Order Total: $
@@ -61,9 +65,6 @@
           <br />
           <br />
         </div>
-        <input class="btn btn-primary" type="submit" value="Submit Order" onclick="done()">
-        <button class="btn btn-info" onclick="reset()" type="button">Reset Order</button>
-        <a class="btn btn-primary btn btn-danger" href="/dashboard" role="button">Cancel</a>
         <form action="/payment" method="POST" id="stripe-button">
           {% csrf_token %}
         <script
@@ -134,3 +135,17 @@ $('#pickup, #dropoff').prop('checked', false);
 
 }
 </script>
+<style>
+#order-items {
+  display: inline-block;
+}
+#dates {
+
+  margin-left: 160px;
+}
+#dates-buttons{
+
+  margin-top: 50px;
+
+}
+</style>
