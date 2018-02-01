@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-
+from django.db.models import Sum, Count
 from django.contrib import messages
 from django.conf import settings
 import stripe
 import bcrypt
-
+from datetime import date
 from models import *
 
 from datetime import datetime
@@ -198,13 +198,33 @@ def checkout(request):
         return redirect('/dashboard')
 
 def admin(request):
-    orders = Order.objects.all().select_related("customer")
+    orders = Order.objects.all().select_related("customer").order_by('-created_at')
+    sales = Order.objects.aggregate(Sum('total'))
+    torders = Order.objects.aggregate(Count('id'))
     context={
-         'orders': orders,
+        'orders': orders,
+        'sales': sales,
+        'torders': torders
     }
     return render(request, 'main/admin.html', context)
 
-def orderinfo(request):
-# def orderinfo(request, id):
-    # user = User.objects.get(id=id)
-    return render(request, 'main/orderinfo.html')
+def orderinfo(request, id):
+    order = Order.objects.all().prefetch_related(
+    "list_items", "list_items__product").select_related("customer").get(id=id)
+    user = User.objects.get(orders=order)
+    user_order = User.objects.all().select_related("address").prefetch_related("orders").get(id=user.id)
+    user_ordert = Order.objects.filter(customer=user_order).aggregate(Sum('total'))
+    user_address = Address.objects.get(user=user)
+    user_street = Address.objects.get(user=user).street
+    user_streetlist = user_street.split()
+    #street = 
+    context = {
+        'order': order,
+        'user': user,
+        'user_order': user_order,
+        'user_ordert': user_ordert,
+        'user_address': user_address,
+        'user_streetlist': user_streetlist,
+    }
+    return render(request, 'main/orderinfo.html', context)
+

@@ -91,14 +91,16 @@
             <br>
             <h2>Order Details</h2>
             <div class="inbox">
-            <h3>Name: John Choi</h2>
+            <h3>Name: {{order.customer.name }}</h2>
                 <ul>
-                    <li>Shirt: 1 pcs</li>
-                    <li>Jacket: 1 pcs</li>
-                    <li>Pants: 1 pcs</li>
-                    <li>Sub Total: $ 300.00 pcs</li>
-                    <li>Delivery Date: 02/08/2018</li>
-                    <li>Special Note:</li>
+                    {% for p in order.list_items.all %}
+                    <li>
+                        {{p.product.product|title}} - {{p.quantity}} pcs
+                    </li>
+                    {% endfor %}
+                    <li>Sub Total: ${{order.total}}</li>
+                    <li>Pick up/Drop off Date: {{order.method_date}}</li>
+                    <li>Special Request: {{order.special}}</li>
                 </ul>
                 <br>
                 <br>
@@ -115,16 +117,19 @@
             <div class="inbox">
                 <h3>Customer Info</h2>
                 <ul>
-                    <li>Total amount for John:  $3000.00</li>
-                    <li>Total amount of Sales (store):$15000.00</li>
-                    <li>% Conversion: 20 %</li>
-                    <li>Remarks:</li>
+                    <li>Total amount of sales for {{user_order.name}}: ${{user_ordert.total__sum}}</li>
+                    <li>Phone Number: {{user_order.phone_number}}</li>
+                    <li>Email: {{user_order.email}}</li>
+                    <li>Address: {{user_order.address.street}} {{user_order.address.city}}, {{user_order.address.state}} {{user_order.address.zip}}</li>
                     <br>
                     <br>
                     <br>
                     <br>
                 </ul>
                 <h3>Location</h3>
+                <p>{{user_street}}</p>
+                <iframe width="425" height="300" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA9a9O3tb12LOQ6hFBrD4l6uPcjwuzm4fU&q={{user_streetlist.0}}+{{user_streetlist.1}}+{{user_streetlist.2}}+{{user_address.city}}+{{user_address.state}}" allowfullscreen>
+                </iframe>
             </div>
         </div>
         
