@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Bubble</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,6 +12,8 @@
       <!-- JAVASCRIPT -->
       <script type="text/javascript" src="main/bower_components/bootstrap/dist/js/bootstrap.js"></script>
       <link rel="stylesheet" href="{% static 'main/css/main.css' %}" media="screen" title="no title"  charset="utf-8">
+      <link rel="shortcut icon" href="{% static 'main/img/bubbleico.ico' %}" />
+      <title>Bubble</title>
   </head>
   <body>
     <div class="container">
@@ -30,9 +31,10 @@
         Phone Number <input type="text" class="form-control" name="phone_number" placeholder ="Phone Number"/><br />
         Address
         <input type="text" class="form-control" name="street" placeholder ="Steet Address"/>
+        <br>
         <input type="text" class="form-control" name="city"  placeholder ="City"/>
+        <br>
         <div class="form-group">
-          <label for="sel1">State</label>
 
           <select class="form-control" name="state" id="sel1">
 
@@ -90,6 +92,7 @@
           </select>
         </div>
         <input type="text" class="form-control" name="zip" placeholder="Zip Code" />
+        <br>
         Password <input type="password" class="form-control" name="password" /><br />
         Confirm Password <input type="password" class="form-control" name="confirm_password"/><br />
         <button type="submit" class="btn btn-primary"> <i class="fa fa-address-card-o" aria-hidden="true"></i> Register</button>
