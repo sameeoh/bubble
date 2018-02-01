@@ -1,0 +1,12 @@
+<form action="/payment" method="POST">
+  {% csrf_token %}
+<script
+  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+  data-key="pk_test_Lshh2A9FJGRda0ZWOti83xpd"
+  data-amount="2000"
+  data-name="bubble"
+  data-description="2 widgets"
+  data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+  data-locale="auto">
+</script>
+</form>

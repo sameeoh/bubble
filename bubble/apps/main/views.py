@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 
 from django.contrib import messages
-
+from django.conf import settings
+import stripe
 import bcrypt
 
 from models import *
@@ -173,4 +174,31 @@ def text(request):
     return redirect('/dev')
 
 def payment(request):
-    return render(request, 'main/payment.html')
+    context = { "stripe_key": settings.STRIPE_PUBLIC_KEY }
+    return render(request, "main/payment.html", context)
+
+def checkout(request):
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+
+    # new_car = Car(
+    #     model = "Honda Civic",
+    #     year  = 2017
+    # )
+
+    if request.method == "POST":
+        token    = request.POST.get("stripeToken")
+    #
+    # try:
+        charge  = stripe.Charge.create(
+            amount      = 2000,
+            currency    = "usd",
+    #         source      = token,
+    #         description = "The product charged to the user"
+        )
+        return redirect('/payment')
+        # new_car.charge_id   = charge.id
+    #except stripe.error.CardError as ce:
+    #    return False, ce
+    else:
+        return redirect('/dashboard')
+        #new_car.save()
