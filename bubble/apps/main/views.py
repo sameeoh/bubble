@@ -161,8 +161,10 @@ def dev(request):
     return render(request, 'main/dev.html')
 
 def text(request):
+    if 'cancel' in request.POST:
+        return redirect('/')
+    
     from twilio.rest import Client
-
     # Your Account SID from twilio.com/console
     account_sid = "AC3d0e91c29c5166cfa4e8b971dc705452"
     # Your Auth Token from twilio.com/console
@@ -171,12 +173,15 @@ def text(request):
     client = Client(account_sid, auth_token)
 
     message = client.messages.create(
+        #send text message
         to="3235285323",
         from_="+1 213-296-1788 ",
         body="Your Order Is Finished! From Bubble Cleaning =)")
-
-    print(message.sid)
-    return redirect('/dev')
+    order_id_status2 = request.POST['order_id_status']
+    update_status = Order.objects.get(id=order_id_status2)
+    update_status.status="Closed"
+    update_status.save()
+    return redirect('/admin')
 
 def payment(request):
     context = { "stripe_key": settings.STRIPE_PUBLIC_KEY }
@@ -217,7 +222,7 @@ def orderinfo(request, id):
     user_address = Address.objects.get(user=user)
     user_street = Address.objects.get(user=user).street
     user_streetlist = user_street.split()
-    #street = 
+    #street =
     context = {
         'order': order,
         'user': user,
@@ -227,4 +232,3 @@ def orderinfo(request, id):
         'user_streetlist': user_streetlist,
     }
     return render(request, 'main/orderinfo.html', context)
-

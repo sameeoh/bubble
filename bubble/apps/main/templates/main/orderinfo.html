@@ -19,7 +19,7 @@
             height: 1000px;
 
         }
-        
+
         .sidenav {
             height: 100%;
             width: 200px;
@@ -31,7 +31,7 @@
             overflow-x: hidden;
             padding-top: 20px;
         }
-        
+
         .sidenav a {
             padding: 6px 6px 6px 32px;
             text-decoration: none;
@@ -39,11 +39,11 @@
             color: #fffefe;
             display: block;
         }
-        
+
         .sidenav a:hover {
             color: #111111;
         }
-        
+
         .left {
             margin-left: 250px; /* Same as the width of the sidenav */
             display: inline-block;
@@ -66,17 +66,17 @@
             height: 800px;
             padding: 20px;
         }
-        
+
         ul{
             font-size:18px;
             line-height:2em;
         }
-        
+
         h2{
             margin:0px;
         }
 
-        
+
     </style>
 </head>
 <body>
@@ -87,7 +87,7 @@
             <a href="#">Ind. Order</a>
             <a href="/logout">Logout</a>
         </div>
-        
+
         <div class="left">
             <br>
             <h2>Order Details</h2>
@@ -109,8 +109,12 @@
                 <br>
                 <br>
                 <br>
-                <button type="button button1">Complete</button>
-                <button type="button">Cancel</button>
+                <form action="../../admin/text" method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" name="order_id_status" value="{{order.id}}" />
+                  <button type="submit" class="btn btn-primary">Complete</button>
+                  <button type="button" class="btn btn-danger" onclick="cancel()">Cancel</button>
+                </form>
             </div>
         </div>
         <div class="right">
@@ -133,15 +137,13 @@
                 </iframe>
             </div>
         </div>
-        
-        
-            
         </div>
-            
-            
 
-
-
-    
 </body>
 </html>
+<script>
+function cancel(){
+
+  window.history.back()
+}
+</script>
