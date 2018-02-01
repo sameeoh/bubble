@@ -64,27 +64,23 @@
         <input class="btn btn-primary" type="submit" value="Submit Order" onclick="done()">
         <button class="btn btn-info" onclick="reset()" type="button">Reset Order</button>
         <a class="btn btn-primary btn btn-danger" href="/dashboard" role="button">Cancel</a>
-        <form action="/payment" method="POST">
+        <form action="/payment" method="POST" id="stripe-button">
           {% csrf_token %}
         <script
           src="https://checkout.stripe.com/checkout.js" class="stripe-button"
           data-key="pk_test_Lshh2A9FJGRda0ZWOti83xpd"
           data-amount=""
           data-name="bubble"
-          data-description="Order Products Here"
+          data-description="Credit Card Payment"
           data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
           data-locale="auto">
-
         </script>
-        </form>
-
-        </div>
       </form>
-  </body>
+    </div>
+  </form>
+ </body>
 </html>
 <script type="text/javascript">
-
-
 
 
 $(document).ready(function(){
