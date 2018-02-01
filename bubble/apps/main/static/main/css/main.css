@@ -28,12 +28,8 @@ input[type=number]{
 }
 
 #dash-list, #orders{
-  width: 400px;
+
   display: inline-block;
-}
-#orders{
-  margin-left: 300px;
-  width: 800px;
 }
 #items {
   display: inline-block;
@@ -65,4 +61,3 @@ input[type=number]{
   display: none;
   width: 350px;
 }
-

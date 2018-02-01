@@ -22,6 +22,7 @@
     <br />
     <div id="dash-list">
       <div class="list-group">
+        <span id="user-login-info">Hello, {{request.session.name}} ~</span>
         <a href="/order" class="list-group-item">Add New Order</a>
         <a href="#" class="list-group-item" onclick="updateInformation()">Update Information</a>
         <a href="/logout" class="list-group-item">Logout</a>
@@ -66,7 +67,7 @@
         Name: <input type="text" name="name" class="form-control" value="{{info.name}}" autofocus="true"/><br />
         Email: <input type="email" name="email" class="form-control" value="{{info.email}}"/><br />
         Phone Number: <input type="text" name="phone_number" class="form-control" value="{{info.phone_number}}"/><br />
-        <button type="submit" class="btn btn-info">Update Information</button>
+        <button type="submit" onclick="done()"class="btn btn-info">Update Information</button>
       </form>
     </div>
   </body>
@@ -76,4 +77,18 @@ function updateInformation() {
 
 $('#update-form').fadeToggle();
 }
+
 </script>
+<style>
+#dash-list{
+  width: 300px;
+}
+#orders{
+  margin-left: 150px;
+  width: 800px;
+}
+#user-login-info{
+
+margin-left: 10px;
+}
+</style>

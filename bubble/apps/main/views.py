@@ -34,6 +34,7 @@ def login(request):
             #admin redirect
             if admin_check == 1:
                 #test for redirectreturn redirect ('/order')
+                request.session['name'] = name.name
                 return redirect('/dashboard')
             request.session['name'] = name.name
             return redirect('/dashboard')
@@ -76,7 +77,11 @@ def register(request):
             # Level = 0 (Normal User)
             # Level = 1 (Admin)
             address = Address.objects.create(street=street, city=city, state=state, zip=zip)
-            User.objects.create(name=name, email=email, phone_number = phone_number,  password=safe_password, address=address, level="1")
+            User.objects.create(name=name, email=email, phone_number = phone_number,  password=safe_password, address=address, level="0")
+            #create session to redirect to dashboard for NORMAL USERS
+            user_register = User.objects.get(email=email)
+            request.session['user_id'] = user_register.id
+            request.session['name'] = user_register.name
             return redirect('/dashboard')
 
 def logout(request):
@@ -182,7 +187,7 @@ def checkout(request):
 
     if request.method == "POST":
         token    = request.POST.get("stripeToken")
-        
+
         charge  = stripe.Charge.create(
             amount      = 3000,
             currency    = "usd",
