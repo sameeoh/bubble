@@ -193,11 +193,11 @@ def checkout(request):
         return redirect('/dashboard')
 
 def admin(request):
-    # orders=Orders.objects.all()
-    # context={
-    #     'orders': orders,
-    # }
-    return render(request, 'main/admin.html')
+    orders = Order.objects.all().select_related("customer")
+    context={
+         'orders': orders,
+    }
+    return render(request, 'main/admin.html', context)
 
 def orderinfo(request):
 # def orderinfo(request, id):

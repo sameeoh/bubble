@@ -114,34 +114,29 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>Yes</td>
-            <td>1</td>
-            <td>Kobe Bryant</td>
-            <td>02/04/2018</td>
-            <td>$ 203.00</td>
-            <td><a href="#">Complete</a></td>
-            <td><a href="#">Delete</a></td>
-            
-        </tr>
-        <tr>
-            <td>Yes</td>
-            <td>2</td>
-            <td>Mary Jane</td>
-            <td>02/07/2018</td>
-            <td>$ 215.00</td>
-            <td><a href="#">Complete</a></td>
-            <td><a href="#">Delete</a></td>
-        </tr>
-        <tr>
-            <td>No</td>
-            <td>3</td>
-            <td>John Choi</td>
-            <td>02/08/2018</td>
-            <td>$ 300.00</td>
-            <td><a href="#">Complete</a></td>
-            <td><a href="#">Delete</a></td>
-        </tr>
+        {% for o in orders %}
+            <tr>
+                <td>
+                    {% if o.special != "None "%}
+                    Yes
+                    {% else %}
+                    No
+                    {% endif %}
+                </td>
+                <td>{{o.id}}</td>
+                <td>
+                    {{o.customer.name }} 
+                </td>
+                <td>{{o.method_date}}</td>
+                <td>{{o.total}}</td>
+                <td>
+                    <a href="#">Complete</a>
+                </td>
+                <td>
+                    <a href="#">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
         </tbody>
         </table>
 </div>
