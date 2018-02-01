@@ -14,8 +14,8 @@
       <!-- JAVASCRIPT -->
       <script type="text/javascript" src="{% static 'main/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
       <link rel="stylesheet" href="{% static 'main/css/main.css' %}" media="screen" title="no title"  charset="utf-8">
-      <script src="{% static 'main/js/main.js' %}"></script>
       <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+      <script src="{% static 'main/js/main.js' %}"></script>
       <script type="text/javascript" src='http://code.jquery.com/jquery-1.10.2.min.js'></script>
   </head>
 
@@ -118,13 +118,6 @@ $(document).ready(function(){
 
 
 })
-function done(){
-
-  swal({
-  icon: "success",
-  text: "Order Successfully Submitted",
-});
-}
 
 function reset(){
 
@@ -134,6 +127,7 @@ $("input[type=date]").val("")
 $('#pickup, #dropoff').prop('checked', false);
 
 }
+
 </script>
 <style>
 #order-items {
