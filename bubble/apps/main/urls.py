@@ -20,5 +20,9 @@ urlpatterns = [
     url(r'^dev/text$', views.text),
     url(r'^payment$', views.payment),
     url(r'^checkout$', views.checkout),
+    #redirect to admin page
+    url(r'^admin$', views.admin),
+    url(r'^orderinfo$', views.orderinfo),
+    # url(r'^orderinfo/(?P<id>\d+$', views.orderinfo)
 
 ]

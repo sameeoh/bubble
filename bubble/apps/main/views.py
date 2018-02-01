@@ -191,3 +191,16 @@ def checkout(request):
 
     else:
         return redirect('/dashboard')
+
+def admin(request):
+    # orders=Orders.objects.all()
+    # context={
+    #     'orders': orders,
+    # }
+    return render(request, 'main/admin.html')
+
+def orderinfo(request):
+# def orderinfo(request, id):
+    # user = User.objects.get(id=id)
+    return render(request, 'main/orderinfo.html')
+
