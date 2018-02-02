@@ -167,7 +167,7 @@ def dev(request):
 def text(request):
     if 'cancel' in request.POST:
         return redirect('/')
-    
+
     from twilio.rest import Client
     # Your Account SID from twilio.com/console
     account_sid = "AC3d0e91c29c5166cfa4e8b971dc705452"
@@ -210,6 +210,7 @@ def admin(request):
     if User.objects.get(id=request.session['user_id']).level == 0:
         return redirect('/dashboard')
     orders = Order.objects.all().select_related("customer").order_by('-created_at')
+
     sales = Order.objects.aggregate(Sum('total'))
     torders = Order.objects.aggregate(Count('id'))
     context={
