@@ -1,0 +1,65 @@
+body {
+    font-family: "Lato", sans-serif;
+}
+
+.wrapper{
+    background-color: #EDF0F5;
+    height: 1000px;
+
+}
+
+.sidenav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(110, 184, 240);
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 6px 6px 6px 32px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #fffefe;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #111111;
+}
+
+.left {
+    margin-left: 250px; /* Same as the width of the sidenav */
+    display: inline-block;
+}
+
+.right {
+    margin-left: 20px; /* Same as the width of the sidenav */
+    margin-top: 32px;
+    vertical-align: top;
+    display: inline-block;
+}
+
+.inbox{
+    margin-top: 20px;
+    background-color: white;
+    border-style: onset;
+    border-radius: 10px;
+    display: inline-block;
+    width: 500px;
+    height: 800px;
+    padding: 20px;
+}
+
+ul{
+    font-size:18px;
+    line-height:2em;
+}
+
+h2{
+    margin:0px;
+}
