@@ -16,6 +16,16 @@
       <title>Bubble</title>
   </head>
   <body>
+    <a href="/"></a><img src="{% static "main/img/bubble_logo.png" %}" class="toplogo"></a>
+    <div class="topnav" id="myTopnav">
+        <a href="#home">Home</a>
+        <a href="#login" class="active">Register/Login</a>
+        <a href="#news">How to use bubble</a>
+        <a href="#contact">Contact</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
+    </div>
+    <div class="background_pic"></div>
+    <img src="{% static 'main/img/transparent.png' %}" alt="https://goo.gl/images/8TGrJw" class="biglogo">
     <div class="container">
       {% if messages %}
          {% for message in messages %}

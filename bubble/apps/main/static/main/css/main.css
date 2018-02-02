@@ -28,7 +28,6 @@ input[type=number]{
 }
 
 #dash-list, #orders{
-
   display: inline-block;
 }
 #items {
@@ -61,6 +60,7 @@ input[type=number]{
   display: inline-block;
   width: 300px;
 }
+
 #dash-left{
   display: inline-block;
   width: 325px;
@@ -79,3 +79,85 @@ input[type=number]{
 #user-login-info{
 margin-left: 10px;
 }
+
+/* Changes made by Joy */
+
+.biglogo {
+  /* opacity: 0.5; */
+  margin: auto, 0;
+  width:32%;
+  height:150px;
+  position: absolute;
+  top: 300px;
+  left: 500px;
+}
+.topnav {
+  overflow: hidden;
+  background-color: transparent;
+  margin-left: 30px;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color:#1ea3eb;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #1ea3eb;
+  color: white;
+}
+
+.active {
+  background-color: white;
+  color: white;
+}
+
+.topnav .icon {
+  display: none;
+}
+.toplogo {
+  display: inline-block;
+  width: 12%;
+  height: 50px;
+  vertical-align: top;
+  margin-left: 20px;
+}
+.background_pic{
+  background-image: url(/static/main/img/background.png);
+  opacity: 0.4;
+  margin: 0;
+  width:100%;
+  height:600px;
+  position: relative;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+}
+/* End of change by Joy */
