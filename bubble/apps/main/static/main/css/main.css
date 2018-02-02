@@ -1,4 +1,12 @@
-
+#wrapper{
+  width: 1400px;
+  margin: 0 auto;
+}
+#loginreg{
+  margin: 0 auto;
+  width: 900px;
+  min-height: 1000px;
+}
 #register{
   display: inline-block;
   width: 400px;
@@ -60,7 +68,10 @@ input[type=number]{
   display: inline-block;
   width: 300px;
 }
-
+.dashhead{
+  color: white;
+  background-color: #1ea3eb;
+}
 #dash-left{
   display: inline-block;
   width: 325px;
@@ -108,7 +119,9 @@ margin-left: 10px;
   text-decoration: none;
   font-size: 17px;
 }
-
+.error{
+  color: red;
+}
 .topnav a:hover {
   background-color: #1ea3eb;
   color: white;
