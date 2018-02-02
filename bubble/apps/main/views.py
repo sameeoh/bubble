@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-
+from django.db.models import Sum, Count
 from django.contrib import messages
 from django.conf import settings
 import stripe
 import bcrypt
-
+from datetime import date
 from models import *
 
 from datetime import datetime
@@ -34,6 +34,7 @@ def login(request):
             #admin redirect
             if admin_check == 1:
                 #test for redirectreturn redirect ('/order')
+                request.session['name'] = name.name
                 return redirect('/dashboard')
             request.session['name'] = name.name
             return redirect('/dashboard')
@@ -76,7 +77,11 @@ def register(request):
             # Level = 0 (Normal User)
             # Level = 1 (Admin)
             address = Address.objects.create(street=street, city=city, state=state, zip=zip)
-            User.objects.create(name=name, email=email, phone_number = phone_number,  password=safe_password, address=address, level="1")
+            User.objects.create(name=name, email=email, phone_number = phone_number,  password=safe_password, address=address, level="0")
+            #create session to redirect to dashboard for NORMAL USERS
+            user_register = User.objects.get(email=email)
+            request.session['user_id'] = user_register.id
+            request.session['name'] = user_register.name
             return redirect('/dashboard')
 
 def logout(request):
@@ -156,8 +161,10 @@ def dev(request):
     return render(request, 'main/dev.html')
 
 def text(request):
+    if 'cancel' in request.POST:
+        return redirect('/')
+    
     from twilio.rest import Client
-
     # Your Account SID from twilio.com/console
     account_sid = "AC3d0e91c29c5166cfa4e8b971dc705452"
     # Your Auth Token from twilio.com/console
@@ -166,12 +173,15 @@ def text(request):
     client = Client(account_sid, auth_token)
 
     message = client.messages.create(
+        #send text message
         to="3235285323",
         from_="+1 213-296-1788 ",
         body="Your Order Is Finished! From Bubble Cleaning =)")
-
-    print(message.sid)
-    return redirect('/dev')
+    order_id_status2 = request.POST['order_id_status']
+    update_status = Order.objects.get(id=order_id_status2)
+    update_status.status="Closed"
+    update_status.save()
+    return redirect('/admin')
 
 def payment(request):
     context = { "stripe_key": settings.STRIPE_PUBLIC_KEY }
@@ -180,38 +190,45 @@ def payment(request):
 def checkout(request):
     stripe.api_key = settings.STRIPE_SECRET_KEY
 
-    # new_car = Car(
-    #     model = "Honda Civic",
-    #     year  = 2017
-    # )
-
     if request.method == "POST":
         token    = request.POST.get("stripeToken")
-        print "@@@@@@@@@@@@@@@@@"
-    #
-    # try:
+
         charge  = stripe.Charge.create(
             amount      = 3000,
             currency    = "usd",
-    #         source      = token,
-    #         description = "The product charged to the user"
         )
         return redirect('/dashboard')
-        # new_car.charge_id   = charge.id
-    #except stripe.error.CardError as ce:
-    #    return False, ce
+
     else:
         return redirect('/dashboard')
-        #new_car.save()
 
 def admin(request):
-    # orders=Orders.objects.all()
-    # context={
-    #     'orders': orders,
-    # }
-    return render(request, 'main/admin.html')
+    orders = Order.objects.all().select_related("customer").order_by('-created_at')
+    sales = Order.objects.aggregate(Sum('total'))
+    torders = Order.objects.aggregate(Count('id'))
+    context={
+        'orders': orders,
+        'sales': sales,
+        'torders': torders
+    }
+    return render(request, 'main/admin.html', context)
 
-def orderinfo(request):
-# def orderinfo(request, id):
-    # user = User.objects.get(id=id)
-    return render(request, 'main/orderinfo.html')
+def orderinfo(request, id):
+    order = Order.objects.all().prefetch_related(
+    "list_items", "list_items__product").select_related("customer").get(id=id)
+    user = User.objects.get(orders=order)
+    user_order = User.objects.all().select_related("address").prefetch_related("orders").get(id=user.id)
+    user_ordert = Order.objects.filter(customer=user_order).aggregate(Sum('total'))
+    user_address = Address.objects.get(user=user)
+    user_street = Address.objects.get(user=user).street
+    user_streetlist = user_street.split()
+    #street =
+    context = {
+        'order': order,
+        'user': user,
+        'user_order': user_order,
+        'user_ordert': user_ordert,
+        'user_address': user_address,
+        'user_streetlist': user_streetlist,
+    }
+    return render(request, 'main/orderinfo.html', context)

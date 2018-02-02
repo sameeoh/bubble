@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     #Bubble Main Apps
     'apps.main',
     'apps.vendor',
+    
 ]
 
 MIDDLEWARE = [

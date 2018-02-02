@@ -1,11 +1,12 @@
 <!doctype html>
+{% load static %}
 <html lang="en">
   <head>
+    <link rel="shortcut icon" href="{% static 'main/img/bubbleico.ico' %}" />
     <title>Bubble</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {% load static %}
       <!-- Bootstrap -->
       <link rel="stylesheet" href="{% static 'main/bower_components/bootstrap/dist/css/bootstrap.min.css' %}" media="screen" title="no title"  charset="utf-8">
       <!-- Font Awesome -->
@@ -20,11 +21,26 @@
       <li class="breadcrumb-item active">Bubble Dashboard</li>
     </ol>
     <br />
-    <div id="dash-list">
-      <div class="list-group">
-        <a href="/order" class="list-group-item">Add New Order</a>
-        <a href="#" class="list-group-item" onclick="updateInformation()">Update Information</a>
-        <a href="/logout" class="list-group-item">Logout</a>
+    <div id= "dash-left">
+      <div id="dash-list">
+        <div class="list-group">
+          <span id="user-login-info">Hello, {{request.session.name}} ~</span>
+          <a href="/order" class="list-group-item">Add New Order</a>
+          <a href="#" class="list-group-item" onclick="updateInformation()">Update Information</a>
+          <a href="/logout" class="list-group-item">Logout</a>
+        </div>
+      </div>
+      <div id="update-form">
+        <form action="" method="POST">
+          {% csrf_token %} Name:
+          <input type="text" name="name" class="form-control" value="{{info.name}}" autofocus="true" />
+          <br /> Email:
+          <input type="email" name="email" class="form-control" value="{{info.email}}" />
+          <br /> Phone Number:
+          <input type="text" name="phone_number" class="form-control" value="{{info.phone_number}}" />
+          <br />
+          <button type="submit" onclick="done()" class="btn btn-info">Update Information</button>
+        </form>
       </div>
     </div>
     <div id="orders">
@@ -50,7 +66,7 @@
             <td>{{o.special}}</td>
             <td>
               {% for p in o.list_items.all %}
-              {{p.product.product|title}} - {{p.quantity}} |
+              <p>{{p.product.product|title}} - {{p.quantity}}</p>
               {% endfor %}
             </td>
             <td>${{o.total}}</td>
@@ -60,20 +76,16 @@
         </tbody>
       </table>
     </div>
-    <div id="update-form">
-      <form action="" method="POST">
-        {% csrf_token %}
-        Name: <input type="text" name="name" class="form-control" value="{{info.name}}" autofocus="true"/><br />
-        Email: <input type="email" name="email" class="form-control" value="{{info.email}}"/><br />
-        Phone Number: <input type="text" name="phone_number" class="form-control" value="{{info.phone_number}}"/><br />
-        <button type="submit" class="btn btn-info">Update Information</button>
-      </form>
-    </div>
   </body>
 </html>
 <script>
+$(document).ready(function(){
+$('#update-form').hide();
+})
 function updateInformation() {
 
 $('#update-form').fadeToggle();
 }
+
 </script>
+

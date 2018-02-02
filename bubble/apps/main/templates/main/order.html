@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="shortcut icon" href="{% static 'main/img/bubbleico.ico' %}" />
     <title>Bubble || Orders</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {% load static %}
       <!-- Bootstrap -->
       <link rel="stylesheet" href="{% static 'main/bower_components/bootstrap/dist/css/bootstrap.min.css' %}" media="screen" title="no title"  charset="utf-8">
       <!-- Font Awesome -->
@@ -15,7 +16,6 @@
       <script type="text/javascript" src="{% static 'main/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
       <link rel="stylesheet" href="{% static 'main/css/main.css' %}" media="screen" title="no title"  charset="utf-8">
       <script src="{% static 'main/js/main.js' %}"></script>
-      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
       <script type="text/javascript" src='http://code.jquery.com/jquery-1.10.2.min.js'></script>
   </head>
 
@@ -53,7 +53,11 @@
           <input type="date" class="form-control" name="method_date" />
           <br /> Pickup
           <input type="radio" name="method" value="pickup" id="pickup" /> Dropoff
-          <input type="radio" name="method" value="dropoff" id="dropoff" />
+          <input type="radio" name="method" value="dropoff" id="dropoff" /><br />
+          <div id="dates-buttons">
+            <button class="btn btn-info" onclick="reset()" type="button">Reset Order</button>
+            <a class="btn btn-primary btn btn-danger" href="/dashboard" role="button">Cancel</a>
+          </div>
         </div>
         <div id="total-content">
           Order Total: $
@@ -61,10 +65,7 @@
           <br />
           <br />
         </div>
-        <input class="btn btn-primary" type="submit" value="Submit Order" onclick="done()">
-        <button class="btn btn-info" onclick="reset()" type="button">Reset Order</button>
-        <a class="btn btn-primary btn btn-danger" href="/dashboard" role="button">Cancel</a>
-        <form action="/payment" method="POST">
+        <form action="/payment" method="POST" id="stripe-button">
           {% csrf_token %}
         <script
           src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -72,19 +73,16 @@
           data-key="pk_test_Lshh2A9FJGRda0ZWOti83xpd"
           data-amount=""
           data-name="bubble"
-          data-description="Order Products Here"
-          data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+          data-description="Credit Card Payment"
+          data-image="static/main/img/logo3.png"
           data-locale="auto">
         </script>
-        </form>
-
-        </div>
       </form>
-  </body>
+    </div>
+  </form>
+ </body>
 </html>
 <script type="text/javascript">
-
-
 
 
 $(document).ready(function(){
@@ -120,13 +118,6 @@ $(document).ready(function(){
 
 
 })
-function done(){
-
-  swal({
-  icon: "success",
-  text: "Order Successfully Submitted",
-});
-}
 
 function reset(){
 
@@ -136,4 +127,19 @@ $("input[type=date]").val("")
 $('#pickup, #dropoff').prop('checked', false);
 
 }
+
 </script>
+<style>
+#order-items {
+  display: inline-block;
+}
+#dates {
+
+  margin-left: 160px;
+}
+#dates-buttons{
+
+  margin-top: 50px;
+
+}
+</style>
