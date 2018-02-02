@@ -14,16 +14,7 @@ def index(request):
     return render(request, 'main/index.html')
 
 def login(request):
-    errors_login = []
-    if len(request.POST['email']) <3:
-        errors_login.append("LOGIN *Email must be at least 3 characters!")
-    if errors_login:
-        for err in errors_login:
-            messages.error(request, err)
-
-        return redirect('/')
-
-    else:
+    try:
         user = User.objects.get(email = request.POST['email'])
         if bcrypt.checkpw(request.POST['password'].encode(), user.password.encode()):
             request.session['user_id'] = user.id
@@ -36,25 +27,38 @@ def login(request):
                 #test for redirectreturn redirect ('/order')
                 request.session['name'] = name.name
                 return redirect('/dashboard')
-            request.session['name'] = name.name
-            return redirect('/dashboard')
-        else:
-            return redirect('/')
+            elif admin_check == 0:
+                request.session['name'] = name.name
+                return redirect('/dashboard')
+    except:
+        messages.error(
+        request, "Email/Password combination FAILED")
+        return redirect('/')
 
 def register(request):
 
     errors_register = []
-    if len(request.POST['name']) < 3:
-        errors_register.append("REGISTER *Name should be longer than 3 characters!")
-    if len(request.POST['password']) < 8:
-        errors_register.append("REGISTER *Password should be at least 8 characters!")
+
+    if len(request.POST['name']) < 1:
+        errors_register.append("Name must be at least two characters.")
+    if len(request.POST['email']) < 3:
+        errors_register.append("Email must be at least four characters.")
+    if len(request.POST['street']) < 3:
+        errors_register.append("Street Address must be at least four characters.")
+    if len(request.POST['city']) < 2:
+        errors_register.append("City must be at least three characters.")
+    if len(request.POST['state']) <= 1:
+        errors_register.append("Please enter a state.")
+    if len(request.POST['zip']) < 4:
+        errors_register.append("Please enter a valid zip code.")
+    if len(request.POST['password']) < 7:
+        errors_register.append("Password must be at least eight characters.")
     if request.POST['password'] != request.POST['confirm_password']:
-        errors_register.append("REGISTER *Password and password confirmation don't match.")
+        errors_register.append("Password and password confirmation don't match.")
 
     if errors_register:
         for err in errors_register:
             messages.error(request, err)
-
         return redirect('/')
     else:
         try:
@@ -90,6 +94,7 @@ def logout(request):
 
 ############# HOME PAGE ##################
 def dashboard(request):
+    print 'IM IN DASHBOARD@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
     if not 'user_id' in request.session:
         return redirect('/')
 
@@ -128,7 +133,6 @@ def order(request):
 
     return render(request, 'main/order.html')
 def add_order(request):
-    print request.POST
     shirt_quant = request.POST['shirt_quant']
     jacket_quant = request.POST['jacket_quant']
     pants_quant = request.POST['pants_quant']
@@ -203,6 +207,8 @@ def checkout(request):
         return redirect('/dashboard')
 
 def admin(request):
+    if User.objects.get(id=request.session['user_id']).level == 0:
+        return redirect('/dashboard')
     orders = Order.objects.all().select_related("customer").order_by('-created_at')
     sales = Order.objects.aggregate(Sum('total'))
     torders = Order.objects.aggregate(Count('id'))
@@ -214,6 +220,8 @@ def admin(request):
     return render(request, 'main/admin.html', context)
 
 def orderinfo(request, id):
+    if User.objects.get(id=request.session['user_id']).level == 0:
+        return redirect('/dashboard')
     order = Order.objects.all().prefetch_related(
     "list_items", "list_items__product").select_related("customer").get(id=id)
     user = User.objects.get(orders=order)
