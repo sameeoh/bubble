@@ -11,6 +11,8 @@ from datetime import datetime
 
 ## BUBLE MAIN  VIEWS ##
 def index(request):
+    if 'user_id' in request.session:
+        return redirect('/dashboard')
     return render(request, 'main/index.html')
 
 def login(request):
