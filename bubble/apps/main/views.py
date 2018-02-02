@@ -94,7 +94,6 @@ def logout(request):
 
 ############# HOME PAGE ##################
 def dashboard(request):
-    print 'IM IN DASHBOARD@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
     if not 'user_id' in request.session:
         return redirect('/')
 
@@ -106,8 +105,7 @@ def dashboard(request):
 
         my_orders_items = Product.objects.filter(order=my_orders)
 
-        get_info_update = User.objects.get(id=request.session['user_id'])
-
+        get_info_update = User.objects.all().select_related("address").get(id=request.session['user_id'])
         context = {
             'user': user,
             'my_orders': my_orders,
@@ -119,10 +117,16 @@ def dashboard(request):
 
     if request.method == "POST":
         update_user = User.objects.get(id=request.session['user_id'])
+        update_address = Address.objects.get(user=update_user)
         update_user.name = request.POST['name']
         update_user.email = request.POST['email']
         update_user.phone_number = request.POST['phone_number']
+        update_address.street = request.POST['street']
+        update_address.city = request.POST['city']
+        update_address.state = request.POST['state']
+        update_address.zip = request.POST['zip']
         update_user.save()
+        update_address.save()
         return redirect('/dashboard')
 
 
@@ -209,7 +213,7 @@ def checkout(request):
 def admin(request):
     if User.objects.get(id=request.session['user_id']).level == 0:
         return redirect('/dashboard')
-    orders = Order.objects.all().select_related("customer").order_by('-created_at')
+    orders = Order.objects.filter(status='New').select_related("customer").order_by('-created_at')
 
     sales = Order.objects.aggregate(Sum('total'))
     torders = Order.objects.aggregate(Count('id'))

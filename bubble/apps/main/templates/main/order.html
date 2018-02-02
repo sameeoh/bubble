@@ -28,55 +28,61 @@
         {% csrf_token %}
         <div id="order-items">
           <p id="clothes-description">Shirts</p>
-          <input type="number" value=0 class="clothes-input" id="shirts" name="shirt_quant" autofocus/> $4.00
+          <input type="number" value=0 min="0" class="clothes-input form-control" id="shirts" name="shirt_quant" autofocus/> $4.00
           <br />
           <p id="clothes-description" >Jackets</p>
-          <input type="number" value=0 class="clothes-input" id="jackets" name="jacket_quant" autofocus/> $10.00
+          <input type="number" value=0 min="0" class="clothes-input form-control" id="jackets" name="jacket_quant" autofocus/> $10.00
           <br />
           <p id="clothes-description">Pants</p>
-          <input type="number" value=0 class="clothes-input" id="pants" name="pants_quant" autofocus/> $20.00
+          <input type="number" value=0 min="0" class="clothes-input form-control" id="pants" name="pants_quant" autofocus/> $20.00
           <br />
           <p id="clothes-description">Suits</p>
-          <input type="number" value=0 class="clothes-input" id="suits" name="suit_quant"autofocus/> $25.00
+          <input type="number" value=0 min="0" class="clothes-input form-control" id="suits" name="suit_quant"autofocus/> $25.00
           <br />
           <p id="clothes-description">Coats</p>
-          <input type="number" value=0 class="clothes-input" id="coats" name="coat_quant" autofocus/> $30.00
+          <input type="number" value=0 min="0" class="clothes-input form-control" id="coats" name="coat_quant" autofocus/> $30.00
           <br />
-
+          <div id="total-content">
+            Order Total: $
+            <input type="number" class= "form-control" id="total" name="total" />
+            <br />
+            <br />
+          </div>
           <p>Special Requests:</p>
           <textarea class="form-control" id="requests" name="special"></textarea>
           <br />
           <br />
         </div>
         <div id="dates">
-          Drop Off/ Pick Up Date:
+          <p> Drop Off/ Pick Up Date: </p>
           <input type="date" class="form-control" name="method_date" />
-          <br /> Pickup
-          <input type="radio" name="method" value="pickup" id="pickup" /> Dropoff
-          <input type="radio" name="method" value="dropoff" id="dropoff" /><br />
+          <br />
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="method" value="pickup" id="pickup">
+            <label class="form-check-label" for="Pickup">
+              Pickup
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="method" value="dropoff" id="dropoff">
+            <label class="form-check-label" for="dropoff">
+              Dropoff
+            </label>
+          </div>
           <div id="dates-buttons">
-            <button class="btn btn-info" onclick="reset()" type="button">Reset Order</button>
+            <button class="btn btn-warning" onclick="reset()" type="button">Reset Order</button>
             <a class="btn btn-primary btn btn-danger" href="/dashboard" role="button">Cancel</a>
           </div>
+          <br>  
+          <div id="stripes">
+            <form action="/payment" method="POST" id="stripe-button">
+              {% csrf_token %}
+              <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="stripe-button" data-key="pk_test_Lshh2A9FJGRda0ZWOti83xpd"
+                data-amount="" data-name="bubble" data-description="Credit Card Payment" data-image="static/main/img/logo3.png" data-locale="auto">
+                </script>
+            </form>
+          </div>
         </div>
-        <div id="total-content">
-          Order Total: $
-          <input type="number" id="total" name="total" />
-          <br />
-          <br />
-        </div>
-        <form action="/payment" method="POST" id="stripe-button">
-          {% csrf_token %}
-        <script
-          src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-          id ="stripe-button"
-          data-key="pk_test_Lshh2A9FJGRda0ZWOti83xpd"
-          data-amount=""
-          data-name="bubble"
-          data-description="Credit Card Payment"
-          data-image="static/main/img/logo3.png"
-          data-locale="auto">
-        </script>
       </form>
     </div>
   </form>
