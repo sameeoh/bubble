@@ -174,19 +174,6 @@ def text(request):
     if 'cancel' in request.POST:
         return redirect('/')
 
-    from twilio.rest import Client
-    # Your Account SID from twilio.com/console
-    account_sid = "AC3d0e91c29c5166cfa4e8b971dc705452"
-    # Your Auth Token from twilio.com/console
-    auth_token  = "b38bff1881d5c49c515ca5f688b62e3a"
-
-    client = Client(account_sid, auth_token)
-
-    message = client.messages.create(
-        #send text message
-        to="3235285323",
-        from_="+1 213-296-1788 ",
-        body="Your Order Is Finished! From Bubble Cleaning =)")
     order_id_status2 = request.POST['order_id_status']
     update_status = Order.objects.get(id=order_id_status2)
     update_status.status="Closed"
